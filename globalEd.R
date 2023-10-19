@@ -58,6 +58,7 @@ out <- SpaDES.project::setupProject(
   functions = "tati-micheletti/Edehzhie@master/inputs/outterFuns.R",
   options = list(spades.allowInitDuringSimInit = TRUE,
                  reproducible.showSimilar = TRUE,
+                 reproducible.inputPaths = "~/data",
                  reproducible.showSimilarDepth = 5,
                  gargle_oauth_email = if (user("tmichele")) "tati.micheletti@gmail.com" else NULL,
                  gargle_oauth_email = if (user("emcintir")) "eliotmcintire@gmail.com" else NULL,
