@@ -19,8 +19,11 @@ getOrUpdatePkg("SpaDES.project", "0.0.8.9023")
 ################### RUNAME
 
 if (SpaDES.project::user("tmichele")) setwd("~/projects/Edehzhie/")
-if (SpaDES.project::user("emcintir")) setwd("~/GitHub/")
-# inputsFolder <- file.path(getwd(), "inputs")
+if (SpaDES.project::user("emcintir")) {
+  setwd("~/GitHub/")
+  .fast <- F
+}
+  # inputsFolder <- file.path(getwd(), "inputs")
 
 # studyArea <- studyAreaGenerator()
 # rasterToMatch <- rtmGenerator(sA = studyArea)
@@ -29,6 +32,7 @@ if (SpaDES.project::user("emcintir")) setwd("~/GitHub/")
 # sppEquiv <- sppEquiv_CA(runName)
 ################ SPADES CALL
 library(SpaDES.project)
+pkgload::load_all("c:/Eliot/GitHub/SpaDES.project")
 out <- SpaDES.project::setupProject(
   runName = "Edehzhie",
   Restart = TRUE,
@@ -38,11 +42,11 @@ out <- SpaDES.project::setupProject(
     file.path("PredictiveEcology",
               c(paste0(# terra-migration
                 c("Biomass_speciesData",
-                  "Biomass_borealDataPrep",
                   "Biomass_core"),
                 "@terra-migration"),
                 paste0(# development
-                  c("Biomass_speciesFactorial",
+                  c("Biomass_borealDataPrep",
+                    "Biomass_speciesFactorial",
                     "Biomass_speciesParameters",
                     "canClimateData",
                     "fireSense_dataPrepFit",
@@ -62,7 +66,7 @@ out <- SpaDES.project::setupProject(
                  reproducible.showSimilarDepth = 5,
                  gargle_oauth_email = if (user("tmichele")) "tati.micheletti@gmail.com" else NULL,
                  gargle_oauth_email = if (user("emcintir")) "eliotmcintire@gmail.com" else NULL,
-                 SpaDES.project.fast = F
+                 SpaDES.project.fast = isTRUE(.fast)
   ),
   times = list(start = 2011,
                end = 2025),
@@ -90,14 +94,14 @@ out <- SpaDES.project::setupProject(
                                       studyAreaName = "NT")
   ),
   packages = c("googledrive", 'RCurl', 'XML',
-               "PredictiveEcology/LandR@development (>= 1.1.0.9069)",
-               "PredictiveEcology/SpaDES.core@optionsAsArgs (>= 2.0.2.9008)"),
+               "PredictiveEcology/LandR@development (>= 1.1.0.9073",
+               "PredictiveEcology/SpaDES.core@optionsAsArgs (>= 2.0.2.9009)"),
   useGit = "sub"
 )
 
 #pkgload::load_all("c:/Eliot/GitHub/SpaDES.project")
-#pkgload::load_all("c:/Eliot/GitHub/reproducible")
-#pkgload::load_all("c:/Eliot/GitHub/SpaDES.core")
+pkgload::load_all("c:/Eliot/GitHub/reproducible")
+pkgload::load_all("c:/Eliot/GitHub/SpaDES.core")
 pkgload::load_all("c:/Eliot/GitHub/LandR")
 
 
