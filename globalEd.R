@@ -10,27 +10,16 @@ getOrUpdatePkg <- function(p, minVer, repo) {
 # devtools::install_github("PredictiveEcology/reproducible", ref = "reproducibleTempCacheDir") # (>= 2.0.8.9010)
 
 getOrUpdatePkg("Require", "0.3.1.14")
-# getOrUpdatePkg("SpaDES.project", "0.0.8.9012")
-getOrUpdatePkg("SpaDES.project", "0.0.8.9023")
-# getOrUpdatePkg("SpaDES.core", "2.0.2.9006") # development
-# devtools::install_github("PredictiveEcology/SpaDES.core", ref = "8ddcbe09550c2a901ab446e92c78ebb9859c97c2") # development #8ddcbe09550c2a901ab446e92c78ebb9859c97c2 optionsAsArgs
-# devtools::install_github("PredictiveEcology/SpaDES.core", ref = "development") # development #8ddcbe09550c2a901ab446e92c78ebb9859c97c2
+getOrUpdatePkg("SpaDES.project", "0.0.8.9025")
 
 ################### RUNAME
-SpaDES.project::pkgload2("~/GitHub/SpaDES.project")
 
 if (SpaDES.project::user("tmichele")) setwd("~/projects/Edehzhie/")
 if (SpaDES.project::user("emcintir")) {
+  SpaDES.project::pkgload2("~/GitHub/SpaDES.project")
   setwd("~/GitHub/")
   .fast <- F
 }
-  # inputsFolder <- file.path(getwd(), "inputs")
-
-# studyArea <- studyAreaGenerator()
-# rasterToMatch <- rtmGenerator(sA = studyArea)
-# studyAreaLarge <- studyAreaGenerator(large = TRUE, destPath = inputsFolder)
-# rasterToMatchLarge <- rtmGenerator(sA = studyAreaLarge, destPath = inputsFolder)
-# sppEquiv <- sppEquiv_CA(runName)
 ################ SPADES CALL
 library(SpaDES.project)
 # pkgload::load_all("c:/Eliot/GitHub/SpaDES.project")
@@ -106,8 +95,9 @@ out <- SpaDES.project::setupProject(
   useGit = "sub"
 )
 
-SpaDES.project::pkgload2(
-  list(file.path("~/GitHub", c("reproducible", "SpaDES.core", "LandR")),
-       "~/GitHub/SpaDES.project"))
+if (SpaDES.project::user("emcintir"))
+  SpaDES.project::pkgload2(
+    list(file.path("~/GitHub", c("reproducible", "SpaDES.core", "LandR")),
+         "~/GitHub/SpaDES.project"))
 
 snippsim <- do.call(SpaDES.core::simInitAndSpades, out)
