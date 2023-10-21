@@ -18,7 +18,7 @@ if (SpaDES.project::user("tmichele")) setwd("~/projects/Edehzhie/")
 if (SpaDES.project::user("emcintir")) {
   SpaDES.project::pkgload2("~/GitHub/SpaDES.project")
   setwd("~/GitHub/")
-  .fast <- F
+  .fast <- T
 }
 ################ SPADES CALL
 library(SpaDES.project)
@@ -61,8 +61,10 @@ out <- SpaDES.project::setupProject(
   ),
   times = list(start = 2011,
                end = 2025),
-  params = list(.globals = list(.plots = NA, .plotInitialTime = NA,
-                                sppEquivCol = 'Boreal')),
+  params = list(.globals = list(.plots = NA,
+                                .plotInitialTime = NA,
+                                sppEquivCol = 'Boreal',
+                                .useCache = c(".inputObjects", "init"))),
   require = "PredictiveEcology/reproducible@reproducibleTempCacheDir (>= 2.0.8.9010)", # so can use Cache next
   # studyArea = Cache(studyAreaGenerator()),
   # rasterToMatch = Cache(rtmGenerator(sA = studyArea)),
