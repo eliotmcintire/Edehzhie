@@ -4,13 +4,11 @@ getOrUpdatePkg <- function(p, minVer, repo) {
     install.packages(p, repos = repo)
   }
 }
-#
-# devtools::install_github("PredictiveEcology/LandR", ref = "development") # (>= 1.1.0.9069)
-# devtools::install_github("PredictiveEcology/SpaDES.core", ref = "optionsAsArgs") # (>= 2.0.2.9007)
-# devtools::install_github("PredictiveEcology/reproducible", ref = "reproducibleTempCacheDir") # (>= 2.0.8.9010)
 
 getOrUpdatePkg("Require", "0.3.1.14")
-getOrUpdatePkg("SpaDES.project", "0.0.8.9025")
+getOrUpdatePkg("SpaDES.project", "0.0.8.9026")
+getOrUpdatePkg("reproducible", "2.0.9")
+getOrUpdatePkg("SpaDES.core", "2.0.3")
 
 ################### RUNAME
 
@@ -22,7 +20,6 @@ if (SpaDES.project::user("emcintir")) {
 }
 ################ SPADES CALL
 library(SpaDES.project)
-# pkgload::load_all("c:/Eliot/GitHub/SpaDES.project")
 out <- SpaDES.project::setupProject(
   runName = "Edehzhie",
   Restart = TRUE,
@@ -53,19 +50,24 @@ out <- SpaDES.project::setupProject(
   options = list(spades.allowInitDuringSimInit = TRUE,
                  reproducible.showSimilar = TRUE,
                  reproducible.memoisePersist = TRUE,
+                 # reproducible.cacheSaveFormat = "qs",
                  reproducible.inputPaths = "~/data",
-                 reproducible.showSimilarDepth = 5,
+                 LandR.assertions = FALSE,
+                 reproducible.cacheSpeed = "fast",
+                 reproducible.gdalwarp = TRUE,
+                 reproducible.showSimilarDepth = 7,
                  gargle_oauth_email = if (user("tmichele")) "tati.micheletti@gmail.com" else NULL,
                  gargle_oauth_email = if (user("emcintir")) "eliotmcintire@gmail.com" else NULL,
-                 SpaDES.project.fast = isTRUE(.fast)
+                 SpaDES.project.fast = isTRUE(.fast),
+                 spades.recoveryMode = FALSE
   ),
   times = list(start = 2011,
                end = 2025),
   params = list(.globals = list(.plots = NA,
                                 .plotInitialTime = NA,
                                 sppEquivCol = 'Boreal',
-                                .useCache = c(".inputObjects", "init"))),
-  require = "PredictiveEcology/reproducible@reproducibleTempCacheDir (>= 2.0.8.9010)", # so can use Cache next
+                                .useCache = c(".inputObjects", "init", "other"))),
+  # require = "PredictiveEcology/reproducible@reproducibleTempCacheDir (>= 2.0.8.9010)", # so can use Cache next
   # studyArea = Cache(studyAreaGenerator()),
   # rasterToMatch = Cache(rtmGenerator(sA = studyArea)),
   # studyAreaLarge = Cache(studyAreaGenerator(large = TRUE, destPath = paths[["inputPath"]])),
@@ -89,8 +91,9 @@ out <- SpaDES.project::setupProject(
   #                                     historicalFireYears = 1991:2020)#,
   #                                     #studyAreaName = "NT")
   # ),
-  studyArea = list(level = 2, NAME_2 = "Fort Smith"),
+  studyArea = list(level = 2, NAME_2 = "Fort Smith", epsg = 3580), # NWT Conic Conformal
   studyAreaLarge = studyArea,
+  require = c("reproducible", "SpaDES.core", "LandR"),
   packages = c("googledrive", 'RCurl', 'XML',
                "PredictiveEcology/LandR@development (>= 1.1.0.9073",
                "PredictiveEcology/SpaDES.core@optionsAsArgs (>= 2.0.2.9009)"),
@@ -99,7 +102,8 @@ out <- SpaDES.project::setupProject(
 
 if (SpaDES.project::user("emcintir"))
   SpaDES.project::pkgload2(
-    list(file.path("~/GitHub", c("reproducible", "SpaDES.core", "LandR")),
+    list(file.path("~/GitHub", c("reproducible", "SpaDES.core", "LandR", "climateData", "fireSenseUtils")),
          "~/GitHub/SpaDES.project"))
 
+unlink(dir(tempdir(), recursive = TRUE, full.names = TRUE))
 snippsim <- do.call(SpaDES.core::simInitAndSpades, out)
