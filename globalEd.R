@@ -7,8 +7,8 @@ getOrUpdatePkg <- function(p, minVer, repo) {
 
 getOrUpdatePkg("Require", "0.3.1.14")
 getOrUpdatePkg("SpaDES.project", "0.0.8.9026")
-getOrUpdatePkg("reproducible", "2.0.9")
-getOrUpdatePkg("SpaDES.core", "2.0.3")
+# getOrUpdatePkg("reproducible", "2.0.9")
+# getOrUpdatePkg("SpaDES.core", "2.0.3")
 
 ################### RUNAME
 
@@ -16,7 +16,7 @@ if (SpaDES.project::user("tmichele")) setwd("~/projects/Edehzhie/")
 if (SpaDES.project::user("emcintir")) {
   SpaDES.project::pkgload2("~/GitHub/SpaDES.project")
   setwd("~/GitHub/")
-  .fast <- T
+  .fast <- F
 }
 ################ SPADES CALL
 library(SpaDES.project)
@@ -102,7 +102,7 @@ out <- SpaDES.project::setupProject(
 
 if (SpaDES.project::user("emcintir"))
   SpaDES.project::pkgload2(
-    list(file.path("~/GitHub", c("reproducible", "SpaDES.core", "LandR", "climateData", "fireSenseUtils")),
+    list(file.path("~/GitHub", c("reproducible", "SpaDES.core", "SpaDES.tools", "LandR", "climateData", "fireSenseUtils")),
          "~/GitHub/SpaDES.project"))
 
 unlink(dir(tempdir(), recursive = TRUE, full.names = TRUE))
