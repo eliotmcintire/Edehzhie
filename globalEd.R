@@ -27,13 +27,11 @@ out <- SpaDES.project::setupProject(
                scratchPath = "~/scratch"),
   modules =
     file.path("PredictiveEcology",
-              c("canClimateData@canadianProvs",
-                paste0(# terra-migration
-                c("Biomass_speciesData",
-                  "Biomass_core"),
-                "@terra-migration"),
+              c("canClimateData@usePrepInputs",
                 paste0(# development
                   c("Biomass_borealDataPrep",
+                    "Biomass_core",
+                    "Biomass_speciesData",
                     "Biomass_speciesFactorial",
                     "Biomass_speciesParameters",
                     "fireSense_dataPrepFit",
