@@ -16,7 +16,7 @@ if (SpaDES.project::user("tmichele")) setwd("~/projects/Edehzhie/")
 if (SpaDES.project::user("emcintir")) {
   SpaDES.project::pkgload2("~/GitHub/SpaDES.project")
   setwd("~/GitHub/")
-  .fast <- F
+  .fast <- T
 }
 ################ SPADES CALL
 library(SpaDES.project)
@@ -28,13 +28,13 @@ out <- SpaDES.project::setupProject(
   modules =
     file.path("PredictiveEcology",
               c("canClimateData@usePrepInputs",
+                "fireSense_dataPrepFit@noParallel",
                 paste0(# development
                   c("Biomass_borealDataPrep",
                     "Biomass_core",
                     "Biomass_speciesData",
                     "Biomass_speciesFactorial",
                     "Biomass_speciesParameters",
-                    "fireSense_dataPrepFit",
                     "fireSense_IgnitionFit",
                     "fireSense_EscapeFit",
                     "fireSense_SpreadFit",
@@ -54,8 +54,9 @@ out <- SpaDES.project::setupProject(
                  reproducible.cacheSpeed = "fast",
                  reproducible.gdalwarp = TRUE,
                  reproducible.showSimilarDepth = 7,
-                 gargle_oauth_email = if (user("tmichele")) "tati.micheletti@gmail.com" else NULL,
-                 gargle_oauth_email = if (user("emcintir")) "eliotmcintire@gmail.com" else NULL,
+                 gargle_oauth_cache = if (machine("W-VIC-A127585")) "~/.secret" else NULL,
+                 gargle_oauth_email =
+                   if (user("emcintir")) "eliotmcintire@gmail.com" else if (user("tmichele")) "tati.micheletti@gmail.com" else NULL,
                  SpaDES.project.fast = isTRUE(.fast),
                  spades.recoveryMode = FALSE
   ),
@@ -91,10 +92,9 @@ out <- SpaDES.project::setupProject(
   # ),
   studyArea = list(level = 2, NAME_2 = "Fort Smith", epsg = 3580), # NWT Conic Conformal
   studyAreaLarge = studyArea,
-  require = c("reproducible", "SpaDES.core", "LandR"),
+  require = c("reproducible", "SpaDES.core", "PredictiveEcology/LandR@development (>= 1.1.0.9073"),
   packages = c("googledrive", 'RCurl', 'XML',
-               "PredictiveEcology/LandR@development (>= 1.1.0.9073",
-               "PredictiveEcology/SpaDES.core@optionsAsArgs (>= 2.0.2.9009)"),
+               "PredictiveEcology/reproducible@modsForLargeArchives (>= 2.0.10.9001)"),
   useGit = "sub"
 )
 
