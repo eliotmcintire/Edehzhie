@@ -52,6 +52,7 @@ out <- SpaDES.project::setupProject(
                  reproducible.showSimilar = TRUE,
                  reproducible.memoisePersist = TRUE,
                  # reproducible.cacheSaveFormat = "qs",
+                 # reproducible.inputPaths = "~/data",
                  reproducible.inputPaths = "/mnt/e/linux/data",
                  LandR.assertions = FALSE,
                  reproducible.cacheSpeed = "fast",
@@ -108,6 +109,6 @@ if (SpaDES.project::user("emcintir"))
                                 "PSPclean")),
         "~/GitHub/SpaDES.project"))
 unlink(dir(tempdir(), recursive = TRUE, full.names = TRUE))
-# debug(reproducible:::.callArchiveExtractFn)
+# undebug(reproducible:::.callArchiveExtractFn)
 snippsim <- do.call(SpaDES.core::simInitAndSpades, out)
 
