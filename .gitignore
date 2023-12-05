@@ -3,3 +3,6 @@ inputs
 .Rproj.user
 
 outputs/
+
+.Rhistory
+.Rprofile
