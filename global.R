@@ -6,7 +6,7 @@ getOrUpdatePkg <- function(p, minVer, repo) {
 }
 
 getOrUpdatePkg("Require", "0.3.1.14")
-getOrUpdatePkg("SpaDES.project", "0.0.8.9026")
+getOrUpdatePkg("SpaDES.project", "0.0.8.9027")
 # getOrUpdatePkg("reproducible", "2.0.9")
 # getOrUpdatePkg("SpaDES.core", "2.0.3")
 
@@ -30,7 +30,6 @@ out <- SpaDES.project::setupProject(
   modules =
     file.path("PredictiveEcology",
               c("canClimateData@usePrepInputs",
-                "fireSense_dataPrepFit@noParallel",
                 paste0(# development
                   c("Biomass_borealDataPrep",
                     "Biomass_core",
@@ -40,6 +39,7 @@ out <- SpaDES.project::setupProject(
                     "fireSense_IgnitionFit",
                     "fireSense_EscapeFit",
                     "fireSense_SpreadFit",
+                    "fireSense_dataPrepFit",
                     "fireSense_dataPrepPredict",
                     "fireSense_IgnitionPredict",
                     "fireSense_EscapePredict",
@@ -48,7 +48,7 @@ out <- SpaDES.project::setupProject(
               )),
   functions = "tati-micheletti/Edehzhie@master/inputs/outterFuns.R",
   options = list(spades.allowInitDuringSimInit = TRUE,
-                 spades.allowSequentialCaching = TRUE,
+                 spades.allowSequentialCaching = F,
                  reproducible.showSimilar = TRUE,
                  reproducible.memoisePersist = TRUE,
                  # reproducible.cacheSaveFormat = "qs",
@@ -69,7 +69,7 @@ out <- SpaDES.project::setupProject(
   params = list(.globals = list(.plots = NA,
                                 .plotInitialTime = NA,
                                 sppEquivCol = 'Boreal',
-                                .useCache = c(".inputObjects", "init", "other"))),
+                                .useCache = c(".inputObjects", "init", "prepIgnitionFitData"))),
   # require = "PredictiveEcology/reproducible@reproducibleTempCacheDir (>= 2.0.8.9010)", # so can use Cache next
   # studyArea = Cache(studyAreaGenerator()),
   # rasterToMatch = Cache(rtmGenerator(sA = studyArea)),
