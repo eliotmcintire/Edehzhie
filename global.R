@@ -62,14 +62,16 @@ out <- SpaDES.project::setupProject(
                  gargle_oauth_email =
                    if (user("emcintir")) "eliotmcintire@gmail.com" else if (user("tmichele")) "tati.micheletti@gmail.com" else NULL,
                  SpaDES.project.fast = isTRUE(.fast),
-                 spades.recoveryMode = FALSE
+                 spades.recoveryMode = FALSE,
+                 reproducible.useMemoise = TRUE
   ),
   times = list(start = 2011,
                end = 2025),
   params = list(.globals = list(.plots = NA,
                                 .plotInitialTime = NA,
                                 sppEquivCol = 'Boreal',
-                                .useCache = c(".inputObjects", "init", "prepIgnitionFitData"))),
+                                cores = 9,
+                                .useCache = c(".inputObjects", "init", "prepIgnitionFitData", "prepSpreadFitData", "prepEscapeFitData"))),
   # require = "PredictiveEcology/reproducible@reproducibleTempCacheDir (>= 2.0.8.9010)", # so can use Cache next
   # studyArea = Cache(studyAreaGenerator()),
   # rasterToMatch = Cache(rtmGenerator(sA = studyArea)),
