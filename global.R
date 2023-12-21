@@ -5,7 +5,7 @@ getOrUpdatePkg <- function(p, minVer, repo) {
   }
 }
 
-getOrUpdatePkg("Require", "0.3.1.14")
+getOrUpdatePkg("Require", "0.3.1.15")
 getOrUpdatePkg("SpaDES.project", "0.0.8.9027")
 # getOrUpdatePkg("reproducible", "2.0.9")
 # getOrUpdatePkg("SpaDES.core", "2.0.3")
@@ -23,9 +23,8 @@ library(SpaDES.project)
 out <- SpaDES.project::setupProject(
   runName = "Edehzhie",
   updateRprofile = TRUE,
-  Restart = TRUE,
+#  Restart = TRUE,
   paths = list(projectPath = runName,
-               # inputPath = "inputs",
                scratchPath = "~/scratch"),
   modules =
     file.path("PredictiveEcology",
@@ -48,61 +47,31 @@ out <- SpaDES.project::setupProject(
               )),
   functions = "tati-micheletti/Edehzhie@master/inputs/outterFuns.R",
   options = list(spades.allowInitDuringSimInit = TRUE,
-                 spades.allowSequentialCaching = F,
                  reproducible.showSimilar = TRUE,
-                 reproducible.memoisePersist = TRUE,
-                 # reproducible.cacheSaveFormat = "qs",
+                 reproducible.cacheSaveFormat = "rds",
                  reproducible.inputPaths = "~/data",
-                 # reproducible.inputPaths = "/mnt/e/linux/data",
-                 LandR.assertions = FALSE,
-                 reproducible.cacheSpeed = "fast",
-                 reproducible.gdalwarp = TRUE,
                  reproducible.showSimilarDepth = 7,
                  gargle_oauth_cache = if (machine("W-VIC-A127585")) "~/.secret" else NULL,
                  gargle_oauth_email =
                    if (user("emcintir")) "eliotmcintire@gmail.com" else if (user("tmichele")) "tati.micheletti@gmail.com" else NULL,
-                 SpaDES.project.fast = isTRUE(.fast),
-                 spades.recoveryMode = FALSE,
-                 reproducible.useMemoise = TRUE
+                 SpaDES.project.fast = isTRUE(.fast) # This sets many
   ),
   times = list(start = 2011,
                end = 2025),
-  params = list(.globals = list(.plots = NA,
+  params = list(
+    fireSense_IgnitionFit = list(.plots = "screen"),
+    .globals = list(#.plots = NA,
                                 .plotInitialTime = NA,
                                 sppEquivCol = 'Boreal',
                                 cores = 9,
                                 .useCache = c(".inputObjects", "init", "prepIgnitionFitData", "prepSpreadFitData", "prepEscapeFitData"))),
-  # require = "PredictiveEcology/reproducible@reproducibleTempCacheDir (>= 2.0.8.9010)", # so can use Cache next
-  # studyArea = Cache(studyAreaGenerator()),
-  # rasterToMatch = Cache(rtmGenerator(sA = studyArea)),
-  # studyAreaLarge = Cache(studyAreaGenerator(large = TRUE, destPath = paths[["inputPath"]])),
-  # rasterToMatchLarge = Cache(rtmGenerator(sA = studyAreaLarge, destPath = paths[["inputPath"]])),
-  # sppEquiv = sppEquiv_CA(runName),
-  # params = list(.globals = list(sppEquivCol = runName,
-  #                               dataYear = "2011",
-  #                               .plotInitialTime = NA,
-  #                               .useCache = c(".inputObjects", "init")),
-  #                               #.studyAreaName = "NT"),
-  #               fireSense_IgnitionFit = list(lb = list(coef = 0,
-  #                                                      #I got this from running only dataPrepFit, then quantile(MDC, probs = 0.05) NOTE: Ian's notes
-  #                                                      knots = list(MDC = 100)),
-  #                                            ub = list(coef = 20,
-  #                                                      #and the upper quantile was 0.9 NOTE: Ian's notes
-  #                                                      knots = list(MDC = 156))),
-  #               canClimateData = list(.runName = runName,
-  #                                     .useCache = ".inputObjects",
-  #                                     climateGCM = "CanESM5",
-  #                                     climateSSP = "370",
-  #                                     historicalFireYears = 1991:2020)#,
-  #                                     #studyAreaName = "NT")
-  # ),
   studyArea = list(level = 2, NAME_2 = "Fort Smith", epsg = 3580), # NWT Conic Conformal
   studyAreaLarge = studyArea,
   require = c("reproducible", "SpaDES.core", "PredictiveEcology/LandR@development (>= 1.1.0.9073"),
   packages = c("googledrive", 'RCurl', 'XML',
-               "PredictiveEcology/SpaDES.core@sequentialCaching (>= 2.0.3.9000)",
-               "PredictiveEcology/reproducible@modsForLargeArchives (>= 2.0.10.9004)"),
-  useGit = "sub"
+               "PredictiveEcology/SpaDES.core@sequentialCaching (>= 2.0.3.9004)",
+               "PredictiveEcology/reproducible@modsForLargeArchives (>= 2.0.10.9013)"),
+useGit = "sub"
 )
 
 if (SpaDES.project::user("emcintir"))
