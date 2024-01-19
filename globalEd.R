@@ -46,7 +46,6 @@ out <- SpaDES.project::setupProject(
               )),
   functions = "tati-micheletti/Edehzhie@master/inputs/outterFuns.R",
   options = list(spades.allowInitDuringSimInit = TRUE,
-                 spades.allowSequentialCaching = TRUE,
                  reproducible.showSimilar = TRUE,
                  reproducible.memoisePersist = TRUE,
                  # reproducible.cacheSaveFormat = "qs",
@@ -101,8 +100,7 @@ out <- SpaDES.project::setupProject(
 
 if (SpaDES.project::user("emcintir"))
   SpaDES.project::pkgload2(
-    list(file.path("~/GitHub", c("reproducible", "SpaDES.core", "SpaDES.tools", "LandR", "climateData", "fireSenseUtils",
-                                 "PSPclean")),
+    list(file.path("~/GitHub", c("reproducible", "SpaDES.core", "SpaDES.tools", "LandR", "climateData", "fireSenseUtils")),
          "~/GitHub/SpaDES.project"))
 
 unlink(dir(tempdir(), recursive = TRUE, full.names = TRUE))
